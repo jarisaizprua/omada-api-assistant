@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Omada API Assistant</title>
+  <meta name="description" content="Asistente de IA para consultar la API abierta de Omada con RAG.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ───────── Sidebar ───────── -->
+  <aside class="sidebar" id="sidebar" aria-label="Navegación">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".55">
+          <path d="M16 16 8.5 9M16 16l8-6.5M16 16l-6 8.5M16 16l8.5 7"/>
+        </g>
+        <circle cx="16" cy="16" r="3.6" fill="var(--accent)"/>
+        <circle cx="8.5" cy="9" r="2.2" fill="var(--m-get)"/>
+        <circle cx="24" cy="9.5" r="2.2" fill="var(--m-patch)"/>
+        <circle cx="10" cy="24.5" r="2.2" fill="var(--m-put)"/>
+        <circle cx="24.5" cy="23" r="2.2" fill="var(--text-dim)"/>
+      </svg>
+      <div class="brand-text">
+        <strong>Omada API</strong>
+        <span>Assistant</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="newChat" type="button">Nueva conversación</button>
+
+    <nav class="history" id="history" aria-label="Conversaciones guardadas"></nav>
+
+    <section class="kb" id="kb" aria-label="Base de conocimiento">
+      <div class="kb-title">Base de conocimiento</div>
+      <div class="kb-body" id="kbBody">Cargando…</div>
+    </section>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- ───────── Main ───────── -->
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn only-narrow" id="menuBtn" type="button" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <h1 class="chat-title" id="chatTitle">Nueva conversación</h1>
+      <div class="top-actions">
+        <button class="search-trigger" id="searchBtn" type="button" aria-label="Explorar la API">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <span>Explorar la API</span>
+          <kbd id="kbdHint">Ctrl K</kbd>
+        </button>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Cambiar tema">
+          <svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>
+        </button>
+        <button class="icon-btn" id="railBtn" type="button" aria-label="Endpoints consultados" aria-pressed="false">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M14.5 4.5v15"/></svg>
+          <span class="badge" id="railCount" hidden>0</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <section class="stage" id="stage">
+      <!-- Home / empty state -->
+      <div class="home" id="home">
+        <div class="hero">
+          <div class="hero-copy">
+            <h2>Pregunta por la API de Omada y recibe el endpoint exacto</h2>
+            <p id="heroSub">Las respuestas se basan en la especificación OpenAPI indexada, no en memoria del modelo.</p>
+          </div>
+          <figure class="topology" id="topologyWrap">
+            <canvas id="topology" aria-label="Mapa de categorías de la API"></canvas>
+            <div class="tip" id="topoTip" hidden></div>
+            <figcaption>
+              <ul class="legend" id="legend"></ul>
+              <span class="caption">Cada nodo es una categoría y su tamaño, el número de operaciones. Haz clic en uno para preguntar por él.</span>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="prompts" id="prompts"></div>
+      </div>
+
+      <!-- Conversation -->
+      <div class="thread" id="thread" hidden><div class="col" id="messages"></div></div>
+    </section>
+
+    <form class="composer" id="composer" autocomplete="off">
+      <div class="composer-box">
+        <textarea id="input" rows="1" maxlength="8000"
+                  placeholder="Pregunta sobre cualquier endpoint, parámetro o código de error…"
+                  aria-label="Mensaje"></textarea>
+        <button class="send" id="sendBtn" type="submit" aria-label="Enviar" disabled>
+          <svg viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>
+        </button>
+        <button class="send stop" id="stopBtn" type="button" aria-label="Detener" hidden>
+          <svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg>
+        </button>
+      </div>
+      <p class="fineprint">Respuestas generadas por IA a partir de la especificación indexada. Verifica los detalles críticos antes de ejecutar cambios en producción.</p>
+    </form>
+  </main>
+
+  <!-- ───────── Right rail: endpoints consulted ───────── -->
+  <aside class="rail" id="rail" aria-label="Endpoints consultados">
+    <div class="rail-head">
+      <h2>Endpoints consultados</h2>
+      <button class="icon-btn only-overlay" id="railClose" type="button" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="rail-list" id="railList"></div>
+  </aside>
+</div>
+
+<!-- ───────── Operation drawer ───────── -->
+<div class="drawer-wrap" id="drawerWrap" hidden>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <header class="drawer-head">
+      <div class="drawer-title">
+        <span class="method" id="drawerMethod"></span>
+        <h2 id="drawerTitle"></h2>
+      </div>
+      <button class="icon-btn" id="drawerClose" type="button" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </header>
+    <div class="drawer-path">
+      <code id="drawerPath"></code>
+      <button class="chip-btn" id="drawerCopy" type="button">Copiar ruta</button>
+    </div>
+    <div class="drawer-meta" id="drawerMeta"></div>
+    <div class="tabs" role="tablist" id="drawerTabs">
+      <button role="tab" data-tab="header" aria-selected="true">Resumen</button>
+      <button role="tab" data-tab="request" aria-selected="false">Request</button>
+      <button role="tab" data-tab="response" aria-selected="false">Response</button>
+    </div>
+    <pre class="schema" id="drawerBody" tabindex="0"></pre>
+    <footer class="drawer-foot">
+      <button class="btn-primary" id="drawerAsk" type="button">Preguntar sobre este endpoint</button>
+    </footer>
+  </aside>
+</div>
+
+<!-- ───────── Command palette ───────── -->
+<dialog class="palette" id="palette" aria-label="Explorar la API">
+  <div class="palette-input">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+    <input id="paletteInput" type="text" placeholder="Busca endpoints: «crear sitio», createNewSite, -33101…" aria-label="Buscar en la API" autocomplete="off" spellcheck="false">
+    <kbd>Esc</kbd>
+  </div>
+  <div class="palette-filters" id="paletteFilters" role="group" aria-label="Filtrar por método"></div>
+  <ul class="palette-results" id="paletteResults" role="listbox"></ul>
+  <div class="palette-foot" id="paletteFoot"></div>
+</dialog>
+
+<!-- ───────── Access token ───────── -->
+<dialog class="modal" id="tokenDlg" aria-labelledby="tokenTitle">
+  <form method="dialog" id="tokenForm">
+    <h2 id="tokenTitle">Token de acceso</h2>
+    <p>Este portal está protegido. Introduce el token configurado en <code>PORTAL_ACCESS_TOKEN</code>.</p>
+    <input id="tokenInput" type="password" placeholder="Token" autocomplete="off" aria-label="Token de acceso">
+    <div class="modal-actions"><button class="btn-primary" id="tokenSave" type="submit">Continuar</button></div>
+  </form>
+</dialog>
+
+<script src="/static/vendor/marked.umd.js"></script>
+<script src="/static/vendor/purify.min.js"></script>
+<script src="/static/vendor/highlight.min.js"></script>
+<script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

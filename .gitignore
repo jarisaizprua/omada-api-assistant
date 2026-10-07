@@ -1,0 +1,36 @@
+# Secretos
+.env
+.env.*
+!.env_template
+
+# Datos generados o con licencia de terceros
+data/index/*
+!data/index/.gitkeep
+data/spec/*
+!data/spec/.gitkeep
+data/guides/*
+!data/guides/_LEEME.md
+data/usage/
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+
+# Editores / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Resultados de evaluaciones (se regeneran)
+evals/results/

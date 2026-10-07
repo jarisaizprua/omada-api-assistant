@@ -1,0 +1,978 @@
+{
+  "version": 1,
+  "description": "Preguntas de evaluación del asistente. Cada pregunta indica qué operación(es) debe nombrar y qué términos debe incluir.",
+  "questions": [
+    {
+      "id": "Q01",
+      "topic": "Sitios",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Qué endpoint uso para listar todos los sitios de mi controlador?",
+      "reference": "GET list of sites; paginated.",
+      "expect_operations": [
+        "getSiteList"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "page"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q02",
+      "topic": "Sitios",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo un sitio nuevo? Dime qué campos son obligatorios y qué permiso necesito.",
+      "reference": "Required body fields: name, region, timeZone, scenario. Permission: Global Dashboard Manager Modify.",
+      "expect_operations": [
+        "createNewSite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "name",
+        "region",
+        "timeZone",
+        "scenario",
+        "Global Dashboard Manager Modify"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q03",
+      "topic": "Sitios",
+      "difficulty": "media",
+      "type": "errores",
+      "question": "Al crear un sitio me devuelve el error -33101, ¿qué significa?",
+      "reference": "-33101 means the site name already exists; choose another name.",
+      "expect_operations": [
+        "createNewSite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "-33101"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q04",
+      "topic": "Sitios",
+      "difficulty": "media",
+      "type": "errores",
+      "question": "Estoy creando sitios y me sale el código -33104. ¿Cuál es el problema?",
+      "reference": "-33104 means the number of sites has reached the limit.",
+      "expect_operations": [
+        "createNewSite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "-33104"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q05",
+      "topic": "Sitios",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "How do I delete a site?",
+      "reference": "DELETE on the site resource, identified by siteId.",
+      "expect_operations": [
+        "deleteSite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "siteId"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q06",
+      "topic": "Sitios",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Puedo cambiar el nombre y la zona horaria de un sitio que ya existe? ¿Con qué endpoint?",
+      "reference": "PUT on the site resource (modify an existing site); body includes name and timeZone.",
+      "expect_operations": [
+        "updateSiteEntity"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "timeZone"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q07",
+      "topic": "Sitios",
+      "difficulty": "dificil",
+      "type": "configurar",
+      "question": "¿Cómo creo un sitio a partir de una plantilla de sitio?",
+      "reference": "There is a dedicated operation to create a site from a site template.",
+      "expect_operations": [
+        "createNewSiteByTemplate"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "template"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q08",
+      "topic": "Sitios",
+      "difficulty": "dificil",
+      "type": "varios_pasos",
+      "question": "Dame un script en Python que cree un sitio llamado 'HQ' usando un token de acceso que ya tengo.",
+      "reference": "POST createNewSite with name, region, timeZone and scenario; Authorization header with the prefix 'AccessToken='. Secrets read from env vars.",
+      "expect_operations": [
+        "createNewSite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "AccessToken",
+        "timeZone"
+      ],
+      "derived_terms": [
+        "requests"
+      ],
+      "needs_guide": true
+    },
+    {
+      "id": "Q09",
+      "topic": "Redes inalámbricas",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Qué endpoint lista los SSID de un sitio?",
+      "reference": "GET list of SSIDs of a site.",
+      "expect_operations": [
+        "getSsidListV2",
+        "getSsidsBySite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "ssids"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q10",
+      "topic": "Redes inalámbricas",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo un SSID nuevo? ¿Cuáles son los campos obligatorios?",
+      "reference": "POST create SSID (v2). Required fields include name, deviceType, band, guestNetEnable and security.",
+      "expect_operations": [
+        "createSsidV2"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "name",
+        "deviceType",
+        "band",
+        "security"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q11",
+      "topic": "Redes inalámbricas",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Cómo elimino un SSID?",
+      "reference": "DELETE on the SSID resource identified by ssidId.",
+      "expect_operations": [
+        "deleteSsidBySite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "ssidId"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q12",
+      "topic": "Redes inalámbricas",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo programo que un SSID solo esté activo en cierto horario?",
+      "reference": "PATCH the SSID WLAN schedule configuration.",
+      "expect_operations": [
+        "updateSsidWlanScheduleBySite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "wlan-schedule"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q13",
+      "topic": "Redes inalámbricas",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo cambio el canal y la potencia de transmisión de un AP en la banda de 5 GHz?",
+      "reference": "PATCH AP radio config; the 5 GHz radio settings contain channel, channelWidth and txPower.",
+      "expect_operations": [
+        "modifyRadiosConfig"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "radioSetting5g",
+        "channelWidth",
+        "txPower"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q14",
+      "topic": "Redes inalámbricas",
+      "difficulty": "dificil",
+      "type": "varios_pasos",
+      "question": "Necesito crear un SSID y luego asociarlo a un grupo de AP concreto. ¿Qué llamadas hago y en qué orden?",
+      "reference": "First create the SSID, then bind it to AP groups with the update-binding operation.",
+      "expect_operations": [],
+      "expect_all_operations": [
+        "createSsidV2",
+        "updateSsidBindApGroups"
+      ],
+      "expect_terms": [
+        "ap-groups"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q15",
+      "topic": "Redes inalámbricas",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo activo o cambio el band steering de un sitio?",
+      "reference": "PATCH site band steering setting (mode).",
+      "expect_operations": [
+        "updateBandSteeringSetting"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "band-steering",
+        "mode"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q16",
+      "topic": "Clientes",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "How do I get the list of connected clients of a site?",
+      "reference": "GET client list of a site.",
+      "expect_operations": [
+        "getGridActiveClients"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "/clients"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q17",
+      "topic": "Clientes",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Cómo bloqueo un cliente usando su MAC?",
+      "reference": "POST block the client; clientMac in the path.",
+      "expect_operations": [
+        "blockClient"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "clientMac",
+        "block"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q18",
+      "topic": "Clientes",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Cómo desbloqueo un cliente que bloqueé antes?",
+      "reference": "POST unblock the client.",
+      "expect_operations": [
+        "unblockClient"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "unblock"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q19",
+      "topic": "Clientes",
+      "difficulty": "media",
+      "type": "buscar",
+      "question": "¿Cómo desconecto a un cliente de la red sin bloquearlo?",
+      "reference": "POST disconnect the client (not block).",
+      "expect_operations": [
+        "disconnectClient"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "disconnect"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q20",
+      "topic": "Clientes",
+      "difficulty": "media",
+      "type": "buscar",
+      "question": "Quiero ver el tráfico histórico de un cliente agrupado por hora. ¿Qué endpoint?",
+      "reference": "POST client statistical data details at an hourly interval.",
+      "expect_operations": [
+        "getClientDetailStatHourly"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "hourly"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q21",
+      "topic": "Dispositivos",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Cómo reinicio un access point de forma remota?",
+      "reference": "POST reboot device; deviceMac in the path.",
+      "expect_operations": [
+        "rebootDevice"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "deviceMac",
+        "reboot"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q22",
+      "topic": "Dispositivos",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo adopto un dispositivo nuevo y con qué credenciales?",
+      "reference": "POST start adopt device; optional username and password in the body.",
+      "expect_operations": [
+        "adoptDevice"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "start-adopt",
+        "username",
+        "password"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q23",
+      "topic": "Dispositivos",
+      "difficulty": "media",
+      "type": "buscar",
+      "question": "Quiero actualizar el firmware de un AP por internet (online). ¿Qué endpoint?",
+      "reference": "POST start online upgrade for a device.",
+      "expect_operations": [
+        "onlineUpgrade"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "start-online-upgrade"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q24",
+      "topic": "Dispositivos",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "How can I make an AP blink its LED so I can find it physically?",
+      "reference": "POST locate device.",
+      "expect_operations": [
+        "locateDevice"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "locate"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q25",
+      "topic": "Dispositivos",
+      "difficulty": "media",
+      "type": "varios_pasos",
+      "question": "¿Cómo olvido (forget) un dispositivo de un sitio y cómo compruebo que el proceso terminó?",
+      "reference": "POST forget device, then GET the forget process status.",
+      "expect_operations": [],
+      "expect_all_operations": [
+        "forgetDevice",
+        "getSingleForgetProcess"
+      ],
+      "expect_terms": [
+        "forget"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q26",
+      "topic": "Dispositivos",
+      "difficulty": "media",
+      "type": "errores",
+      "question": "¿Qué significa el error -39006 y en qué operación aparece?",
+      "reference": "-39006 is an operation-specific error of rebooting a device.",
+      "expect_operations": [
+        "rebootDevice"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "-39006"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q27",
+      "topic": "Dispositivos",
+      "difficulty": "dificil",
+      "type": "referencia",
+      "question": "Quiero el uso de CPU y memoria de un switch en las últimas 24 horas, cada 5 minutos. ¿Qué llamada hago y con qué parámetros?",
+      "reference": "POST the device statistics 5-minute interface; query type=switch; body start, end (UTC seconds) and attrs such as cpu and mem.",
+      "expect_operations": [
+        "getDevice5MinStatistic"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "attrs",
+        "cpu",
+        "mem",
+        "start",
+        "end"
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q28",
+      "topic": "Dispositivos",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Se puede apagar o encender el LED de todos los dispositivos de un sitio con la API?",
+      "reference": "PUT site LED setting with the boolean 'enable'.",
+      "expect_operations": [
+        "updateSiteLedSetting"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "led",
+        "enable"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q29",
+      "topic": "Red y gateway",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Qué endpoint lista las redes LAN de un sitio?",
+      "reference": "GET LAN network list.",
+      "expect_operations": [
+        "getLanNetworkListV2",
+        "getLanNetworkListV3"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "lan-networks"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q30",
+      "topic": "Red y gateway",
+      "difficulty": "dificil",
+      "type": "configurar",
+      "question": "Quiero crear una red LAN con VLAN 20 en un sitio. ¿Qué endpoint y qué campos principales debo enviar?",
+      "reference": "POST create LAN network; fields include name, purpose, vlanType and vlan.",
+      "expect_operations": [
+        "createLanNetworkV2"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "name",
+        "purpose",
+        "vlan"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q31",
+      "topic": "Red y gateway",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo configuro una regla de reenvío de puertos (port forwarding) en el gateway?",
+      "reference": "POST create port forwarding; name and status are required.",
+      "expect_operations": [
+        "createPortForwarding"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "name",
+        "status",
+        "port-forwardings"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q32",
+      "topic": "Red y gateway",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "How do I add a static route to a site?",
+      "reference": "POST create static routing; destinations and routeType are required.",
+      "expect_operations": [
+        "createStaticRouting_1"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "destinations",
+        "routeType"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q33",
+      "topic": "Red y gateway",
+      "difficulty": "media",
+      "type": "buscar",
+      "question": "¿Cómo consulto el estado de los puertos WAN de un gateway?",
+      "reference": "GET gateway WAN status; gatewayMac in the path.",
+      "expect_operations": [
+        "getWanStatus"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "gatewayMac",
+        "wan-status"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q34",
+      "topic": "Red y gateway",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo un perfil de límite de velocidad que limite la bajada a 10 Mbps?",
+      "reference": "POST create rate limit profile; downLimit is expressed in Kbps, so 10 Mbps = 10000 Kbps; downLimitEnable must be true.",
+      "expect_operations": [
+        "createRateLimitProfile"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "downLimit",
+        "downLimitEnable"
+      ],
+      "derived_terms": [
+        "10000"
+      ],
+      "needs_guide": false
+    },
+    {
+      "id": "Q35",
+      "topic": "Red y gateway",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo una VPN sitio a sitio automática entre dos sitios?",
+      "reference": "POST create site-to-site VPN by auto; fields name, status, vpnType and remoteSite.",
+      "expect_operations": [
+        "createS2SAutoVpn"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "remoteSite",
+        "vpnType"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q36",
+      "topic": "Red y gateway",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo un enlace IP-MAC (IP-MAC binding) para un equipo?",
+      "reference": "POST create IP-MAC binding; mac, ip, status, interfaceType and interfaceId are required.",
+      "expect_operations": [
+        "createIpMacBinding"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "mac",
+        "ip"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q37",
+      "topic": "Red y gateway",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "Quiero ejecutar un test de velocidad (speed test) en el gateway. ¿Qué endpoint uso?",
+      "reference": "POST start speed test on a gateway.",
+      "expect_operations": [
+        "startSpeedTestV2"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "speedTest",
+        "gatewayMac"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q38",
+      "topic": "Seguridad y perfiles",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo un filtro de MAC en un sitio?",
+      "reference": "POST create MAC filtering; filterMode and macAddresses.",
+      "expect_operations": [
+        "createMacFiltering"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "filterMode",
+        "macAddresses"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q39",
+      "topic": "Seguridad y perfiles",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "Quiero crear un grupo de vouchers para un portal de invitados. ¿Qué campos son obligatorios?",
+      "reference": "POST create voucher group; name, amount, codeLength, codeForm, limitType, durationType, duration are required.",
+      "expect_operations": [
+        "createVoucherGroup"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "amount",
+        "codeLength",
+        "duration"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q40",
+      "topic": "Seguridad y perfiles",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo un perfil de rango horario (time range) para los días laborables?",
+      "reference": "POST create time range profile; dayMode plus per-day booleans like dayMon.",
+      "expect_operations": [
+        "createTimeRangeProfile"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "dayMode",
+        "dayMon"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q41",
+      "topic": "Seguridad y perfiles",
+      "difficulty": "media",
+      "type": "configurar",
+      "question": "¿Cómo creo un usuario administrador en el controlador y qué permiso necesito?",
+      "reference": "POST create new user; roleId, name and type required; permission Global Users Manager Modify.",
+      "expect_operations": [
+        "createNewUser"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "roleId",
+        "Global Users Manager Modify"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q42",
+      "topic": "Seguridad y perfiles",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "¿Cómo obtengo los logs de auditoría de un sitio?",
+      "reference": "GET site audit log list.",
+      "expect_operations": [
+        "getAuditLogsForSite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "audit-logs"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q43",
+      "topic": "Seguridad y perfiles",
+      "difficulty": "facil",
+      "type": "buscar",
+      "question": "Where can I get the alert logs of a site?",
+      "reference": "GET site alert log list.",
+      "expect_operations": [
+        "getAlertLogsForSite"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "logs/alerts"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q44",
+      "topic": "Lotes",
+      "difficulty": "dificil",
+      "type": "referencia",
+      "question": "Necesito ejecutar varias llamadas de la API de una sola vez. ¿Existe algo para eso y hay un límite?",
+      "reference": "Yes: the Batch Processing OpenAPIs operation (POST /batch) with an 'actions' list (path, method, body, query). Up to 20 other OpenAPIs per call, all with the same omadacId.",
+      "expect_operations": [
+        "batchController"
+      ],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "actions",
+        "20"
+      ],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q45",
+      "topic": "Autenticación",
+      "difficulty": "facil",
+      "type": "autenticacion",
+      "question": "¿Cómo obtengo el token de acceso con el modo client credentials?",
+      "reference": "POST /openapi/authorize/token?grant_type=client_credentials with JSON body omadacId, client_id, client_secret. Response has accessToken, refreshToken, expiresIn (7200 s).",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "client_credentials",
+        "/openapi/authorize/token",
+        "omadacId",
+        "client_secret"
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q46",
+      "topic": "Autenticación",
+      "difficulty": "facil",
+      "type": "autenticacion",
+      "question": "¿Con qué cabecera envío el token en cada llamada y con qué formato?",
+      "reference": "Authorization header whose value is 'AccessToken=<token>' (prefix AccessToken=).",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "Authorization",
+        "AccessToken="
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q47",
+      "topic": "Autenticación",
+      "difficulty": "media",
+      "type": "autenticacion",
+      "question": "Mi token expiró. ¿Cómo lo renuevo y cuánto duran el token y el refresh token?",
+      "reference": "POST /openapi/authorize/token with grant_type=refresh_token, refresh_token, client_id and client_secret. Access token valid 2 hours; refresh token 14 days.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "refresh_token",
+        "/openapi/authorize/token"
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q48",
+      "topic": "Autenticación",
+      "difficulty": "media",
+      "type": "autenticacion",
+      "question": "¿Qué diferencia hay entre el modo código de autorización y client credentials, y cuál me conviene para un script automático?",
+      "reference": "Authorization code acts on behalf of a logged-in user (interactive apps); client credentials is server-to-server and is the right one for automation scripts.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "authorization_code|código de autorización|authorization code",
+        "client_credentials|client credentials|credenciales de cliente"
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q49",
+      "topic": "Autenticación",
+      "difficulty": "media",
+      "type": "autenticacion",
+      "question": "¿Qué significa el error -44112 y qué debo hacer?",
+      "reference": "-44112: the access token has expired; use the refresh token flow to get a new access token.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "-44112",
+        "refresh"
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q50",
+      "topic": "Autenticación",
+      "difficulty": "dificil",
+      "type": "autenticacion",
+      "question": "Quiero usar el modo código de autorización. ¿Cuáles son los pasos hasta tener el token?",
+      "reference": "1) POST /openapi/authorize/login (client_id, omadac_id; username/password) returns csrfToken and sessionId. 2) POST /openapi/authorize/code with Csrf-Token and Cookie TPOMADA_SESSIONID returns the code (valid 2 minutes). 3) POST /openapi/authorize/token with grant_type=authorization_code.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "/openapi/authorize/login",
+        "/openapi/authorize/code",
+        "csrf",
+        "authorization_code"
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q51",
+      "topic": "Datos de referencia",
+      "difficulty": "dificil",
+      "type": "referencia",
+      "question": "¿Qué valor debo usar en timeZone para un sitio en Madrid?",
+      "reference": "The guide's time zone table does NOT contain Europe/Madrid. The answer must not claim it is valid; it may suggest a listed CET zone such as Europe/Brussels, Europe/Amsterdam or Europe/Belgrade.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q52",
+      "topic": "Datos de referencia",
+      "difficulty": "media",
+      "type": "referencia",
+      "question": "¿Qué código entero uso para el protocolo UDP en una regla ACL?",
+      "reference": "UDP = 17 in the ACL protocol table.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [
+        "17"
+      ],
+      "derived_terms": [],
+      "needs_guide": true
+    },
+    {
+      "id": "Q53",
+      "topic": "Fuera de alcance",
+      "difficulty": "media",
+      "type": "fuera_de_alcance",
+      "question": "¿Qué endpoint me permite gestionar la garantía o abrir una RMA de un dispositivo?",
+      "reference": "The API has no warranty or RMA operations. A good answer says it is not available and does not invent an endpoint.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q54",
+      "topic": "Fuera de alcance",
+      "difficulty": "media",
+      "type": "fuera_de_alcance",
+      "question": "¿Cómo leo por API la contraseña actual, en texto plano, de la cuenta admin del controlador?",
+      "reference": "No operation returns existing passwords. A good answer says so (user passwords can only be set when creating/modifying a user) and does not invent an endpoint.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q55",
+      "topic": "Fuera de alcance",
+      "difficulty": "facil",
+      "type": "fuera_de_alcance",
+      "question": "¿Qué endpoint devuelve el pronóstico del clima para la ubicación de mi sitio?",
+      "reference": "Weather data is not part of the Omada API. A good answer says it is not available.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [],
+      "derived_terms": [],
+      "needs_guide": false
+    },
+    {
+      "id": "Q56",
+      "topic": "Fuera de alcance",
+      "difficulty": "media",
+      "type": "fuera_de_alcance",
+      "question": "¿Cómo restablezco de fábrica un AP mediante la API?",
+      "reference": "No factory-reset operation was found in this spec version. A good answer says it could not find one and does not invent an endpoint.",
+      "expect_operations": [],
+      "expect_all_operations": [],
+      "expect_terms": [],
+      "derived_terms": [],
+      "needs_guide": false
+    }
+  ]
+}
